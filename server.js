@@ -28,6 +28,38 @@ fastify.get("/", function (request, reply) {
   reply.send({hello: "world"});
 });
 
+
+// test database connection
+fastify.get("/test-db", async (request, reply) => {
+  try {
+    const mongoose = fastify.mongoose
+    const connectionState = mongoose.connection.readyState
+    
+    let status = ""
+    switch(connectionState) {
+      case 0:
+        status = "disconnected"
+        break;
+      case 1:
+        status = "connected"
+        break;
+      case 2:
+        status = "connecting"
+        break;
+      case 3:
+        status = "disconnecting"
+        break;
+      default:
+        status = "Unknown!";
+        break;
+    }
+  } catch (err) {
+    fastify.log.error(err);
+    reply.status(500).send({error: "Failed to test database"});
+    process.exit(1);
+  }
+});
+
 const start = async () => {
   try {
     await fastify.listen({port: process.env.PORT || 3000});
