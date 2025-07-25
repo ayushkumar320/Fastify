@@ -16,7 +16,11 @@ fastify.register(require("@fastify/env"), {
       JWT_TOKEN: {type: "string",},
     },
   },
-})
+});
+
+// Register custom plugins
+fastify.register(require("./plugins/mongodb.js"));
+
 
 
 // Declare a route
