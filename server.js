@@ -53,6 +53,7 @@ fastify.get("/test-db", async (request, reply) => {
         status = "Unknown!";
         break;
     }
+    reply.send({database: status});
   } catch (err) {
     fastify.log.error(err);
     reply.status(500).send({error: "Failed to test database"});
