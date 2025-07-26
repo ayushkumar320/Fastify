@@ -20,6 +20,10 @@ fastify.register(require("@fastify/env"), {
 
 // Register custom plugins
 fastify.register(require("./plugins/mongodb.js"));
+fastify.register(require("./plugins/jwt.js"));
+
+// Register routes
+fastify.register(require("./routes/auth.js"), {prefix: "/api/auth"});
 
 
 
